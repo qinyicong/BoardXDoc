@@ -4,20 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markdown Renderer</title>
-
-    <!-- 使用 unpkg 加载 marked.js -->
-    <script src="marked.min.js"></script>
-
     <style>
-        nav {
-            margin-bottom: 20px;
-        }
-        nav a {
-            margin-right: 10px;
-            cursor: pointer;
-            text-decoration: none;
-            color: blue;
-        }
         .content {
             margin-top: 20px;
             padding: 20px;
@@ -39,31 +26,39 @@
     <div id="content" class="content"></div>
 
     <script>
-        // 默认加载 Agent 下的 file1.md
+        // 默认加载
         loadMarkdown('Home.md');  
 
         function loadMarkdown(file) {
             const contentContainer = document.getElementById('content'); // 获取渲染内容的容器
 
-            // 检查 marked 是否加载成功
-            console.log("Marked Function: ", marked);  // 在控制台输出 marked 对象
-
-            if (typeof marked !== 'function') {
-                console.error('Error: marked is not a function');
-                contentContainer.innerHTML = '<p>Failed to load content due to marked.js issue.</p>';
-                return;
-            }
-
-            // 使用 unpkg 加载的 marked.js 渲染 Markdown
-            fetch('https://raw.githubusercontent.com/qinyicong/BoardXDoc/main/' + file)
-                .then(response => response.text())
+            // 先获取原始的 Markdown 文件内容
+            fetch(`https://api.github.com/repos/qinyicong/BoardXDoc/contents/${file}`)
+                .then(response => response.json())
                 .then(data => {
-                    const content = marked(data);  // 使用 marked 渲染 Markdown
-                    contentContainer.innerHTML = content; // 将渲染后的内容插入到页面
+                    // 获取文件的内容，GitHub 返回的内容是 Base64 编码的，需要解码
+                    const markdownContent = atob(data.content);  // 解码 Base64
+
+                    // 调用 GitHub 的 Markdown 渲染端点
+                    fetch('https://api.github.com/markdown', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ text: markdownContent, mode: 'gfm' }) // GitHub Flavored Markdown (GFM)
+                    })
+                    .then(response => response.text())
+                    .then(renderedHtml => {
+                        contentContainer.innerHTML = renderedHtml;  // 渲染 HTML 内容到页面
+                    })
+                    .catch(error => {
+                        console.error('Error rendering Markdown:', error);
+                        contentContainer.innerHTML = '<p>Failed to render Markdown content.</p>';
+                    });
                 })
                 .catch(error => {
                     console.error('Error loading Markdown file:', error);
-                    contentContainer.innerHTML = '<p>Failed to load content.</p>'; // 错误处理
+                    contentContainer.innerHTML = '<p>Failed to load Markdown file.</p>';
                 });
         }
     </script>
