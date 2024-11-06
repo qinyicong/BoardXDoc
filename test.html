@@ -4,56 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markdown Renderer</title>
-    <style>
-        /* 样式设置 */
-        body {
-            display: flex;
-            font-family: Arial, sans-serif;
-        }
-
-        nav {
-            width: 200px;
-            padding: 20px;
-            background-color: #f4f4f4;
-            border-right: 2px solid #ccc;
-        }
-
-        nav a {
-            display: block;
-            margin-bottom: 10px;
-            text-decoration: none;
-            color: blue;
-            cursor: pointer;
-        }
-
-        nav a:hover {
-            color: darkblue;
-        }
-
-        .content {
-            flex-grow: 1;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-left: 2px solid #ccc;
-        }
-
-        .content h1 {
-            margin-top: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- 左侧导航栏 -->
+<!-- 左侧导航栏 -->
     <nav>
-        <a href="#" onclick="loadMarkdown('wiki/Home.md')">Agent Page 1</a>
-        <a href="#" onclick="loadMarkdown('wiki/Agent/Copywriter.md')">Tools Page 1</a>
-        <a href="#" onclick="loadMarkdown('Agent/file3.md')">Agent Page 2</a>
-        <a href="#" onclick="loadMarkdown('Tools/file4.md')">Tools Page 2</a>
+        <a href="#" onclick="loadMarkdown('Agent/file1.md')">Agent</a>
+        <div class="submenu">
+            <a href="#" onclick="loadMarkdown('wiki/Home.md/')">Agent Page 1</a>
+            <a href="#" onclick="loadMarkdown('wiki/Home.md')">Agent Page 2</a>
+        </div>
+
+        <a href="#" onclick="loadMarkdown('Tools/file1.md')">Tools</a>
+        <div class="submenu">
+            <a href="#" onclick="loadMarkdown('Tools/file1.md')">Tools Page 1</a>
+            <a href="#" onclick="loadMarkdown('Tools/file2.md')">Tools Page 2</a>
+        </div>
+
+        <a href="#" onclick="loadMarkdown('Documentation/file1.md')">Documentation</a>
+        <div class="submenu">
+            <a href="#" onclick="loadMarkdown('Documentation/file1.md')">Doc Page 1</a>
+            <a href="#" onclick="loadMarkdown('Documentation/file2.md')">Doc Page 2</a>
+        </div>
     </nav>
 
     <!-- 右侧内容区域 -->
-    <div id="wikicontent" class="content">
+    <div id="content" class="content">
         <h1>Welcome</h1>
         <p>Please select a page from the left navigation to view its content.</p>
     </div>
@@ -64,7 +41,7 @@
 
         // 加载指定的 Markdown 文件并渲染
         function loadMarkdown(file) {
-            const contentContainer = document.getElementById('wikicontent'); // 获取渲染内容的容器
+            const contentContainer = document.getElementById('content'); // 获取渲染内容的容器
 
             // 获取原始的 Markdown 文件内容
             fetch(`https://api.github.com/repos/qinyicong/BoardXDoc/contents/${file}`)
@@ -95,6 +72,23 @@
                     contentContainer.innerHTML = '<p>Failed to load Markdown file.</p>';
                 });
         }
+
+        // Toggle active class to show/hide submenus
+        const menuLinks = document.querySelectorAll('nav > a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function (event) {
+                const parent = link.parentNode;
+                const submenu = parent.querySelector('.submenu');
+
+                // Toggle visibility of submenu
+                if (submenu) {
+                    parent.classList.toggle('active');
+                }
+
+                // Prevent the default behavior (page scroll)
+                event.preventDefault();
+            });
+        });
     </script>
 
 </body>
