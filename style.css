@@ -1,68 +1,67 @@
-{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
+/* 全局字体设置 */
 body {
+    display: flex;
     font-family: Arial, sans-serif;
 }
 
-.container {
-    display: flex;
-    height: 100vh;
-}
-
-/* Sidebar */
-.sidebar {
+nav {
     width: 250px;
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    overflow-y: auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-right: 2px solid #ccc;
 }
 
-.sidebar ul {
-    list-style-type: none;
-}
-
-.sidebar .menu-item > a {
+/* 一级菜单样式 */
+nav > a {
     display: block;
     padding: 10px;
-    color: white;
+    margin-bottom: 5px;
     text-decoration: none;
+    color: #333;
+    background-color: #e0e0e0;  /* 一级菜单背景颜色 */
+    font-weight: bold;
     cursor: pointer;
+    border-radius: 4px;
 }
 
-.sidebar .menu-item > a:hover {
-    background-color: #444;
+/* 一级菜单鼠标悬停效果 */
+nav > a:hover {
+    background-color: #d0d0d0;
+    color: #000;
 }
 
+/* 二级菜单样式 */
 .submenu {
-    display: none;
-    padding-left: 20px;
+    margin-left: 20px;
+    display: none;  /* 默认隐藏二级菜单 */
 }
 
-.submenu li a {
+.submenu a {
     display: block;
     padding: 8px;
-    color: #ddd;
+    margin-bottom: 5px;
     text-decoration: none;
+    color: #333;
+    background-color: #f0f0f0;  /* 二级菜单背景颜色 */
+    border-radius: 4px;
     cursor: pointer;
 }
 
-.submenu li a:hover {
-    background-color: #555;
+/* 二级菜单鼠标悬停效果 */
+.submenu a:hover {
+    background-color: #e5e5e5;
+    color: #000;
 }
 
-/* Content Pane */
+/* 右侧内容区域 */
 .content {
-    flex: 1;
-    background-color: #f0f0f0;
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-left: 2px solid #ccc;
 }
 
-.content iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
+/* active 类：展开显示二级菜单 */
+.active .submenu {
+    display: block;
 }
