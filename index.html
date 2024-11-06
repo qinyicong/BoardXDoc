@@ -90,10 +90,10 @@
         </div>
 
         <!-- Content Pane -->
-        <div class="content">
-            <iframe id="content" name="content-frame" src="wiki/Home.md" ></iframe>
+        <div class="content" id="wikicontent">
+            <iframe name="content-frame" src="wiki/Home.md" ></iframe>
         </div>
-    </div>
+        </div>
 
      <!-- JavaScript -->
 <script>
@@ -101,7 +101,7 @@
         loadMarkdown('wiki/Home.md');  
 
         function loadMarkdown(file) {
-            const contentContainer = document.getElementById('content'); // 获取渲染内容的容器
+            const contentContainer = document.getElementById('wikicontent'); // 获取渲染内容的容器
 
             // 先获取原始的 Markdown 文件内容
             fetch(`https://api.github.com/repos/qinyicong/BoardXDoc/contents/${file}`)
