@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BoardXDoc</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- 引入 marked.js -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -102,6 +103,31 @@
             const submenu = document.getElementById(submenuId);
             submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
         }
+
+        // Function to Markdown
+        // Default load
+        loadMarkdown('Home.md');
+
+        function loadMarkdown(file) {
+            // 获取 iframe 元素
+            const iframe = document.getElementById('contentFrame');
+
+            // 通过 fetch 获取 Markdown 文件内容
+            fetch('https://raw.githubusercontent.com/qinyicong/BoardXDoc/main/' + file)
+                .then(response => response.text())
+                .then(data => {
+                    // 使用 marked.js 渲染 Markdown 内容
+                    const content = marked(data);
+                    // 获取 iframe 的 document 并设置内容
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    iframeDoc.body.innerHTML = content;
+                })
+                .catch(error => {
+                    console.error('Error loading Markdown file:', error);
+                    iframe.contentDocument.body.innerHTML = '<p>Failed to load content.</p>';
+                });
+        }
+
     </script>
 </body>
 </html>
