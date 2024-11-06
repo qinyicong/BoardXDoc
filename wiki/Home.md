@@ -1,1 +1,1 @@
-Welcome to the BoardXDoc wiki!
+# Welcome to the BoardXDoc wiki!
