@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BoardXDoc</title>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- 引入 marked.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.12/lib/marked.min.js"></script> <!-- 引入 marked.js -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -96,14 +96,8 @@
         </div>
     </div>
 
+     <!-- JavaScript -->
     <script>
-        // Function to toggle visibility of submenus
-        function toggleSubMenu(event, submenuId) {
-            event.preventDefault();
-            const submenu = document.getElementById(submenuId);
-            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-        }
-
         // Function to Markdown
         // Default load
         loadMarkdown('Home.md');
@@ -126,6 +120,15 @@
                     console.error('Error loading Markdown file:', error);
                     iframe.contentDocument.body.innerHTML = '<p>Failed to load content.</p>';
                 });
+        }
+    </script>
+        
+    <script>
+        // Function to toggle visibility of submenus
+        function toggleSubMenu(event, submenuId) {
+            event.preventDefault();
+            const submenu = document.getElementById(submenuId);
+            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
         }
 
     </script>
