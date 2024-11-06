@@ -2,6 +2,7 @@
 body {
     display: flex;
     font-family: Arial, sans-serif;
+    margin: 0;
 }
 
 nav {
@@ -9,6 +10,9 @@ nav {
     padding: 20px;
     background-color: #f4f4f4;
     border-right: 2px solid #ccc;
+    position: fixed; /* 固定导航栏位置 */
+    height: 100vh; /* 让导航栏高度占满视窗 */
+    overflow-y: auto; /* 如果内容太多，允许滚动 */
 }
 
 /* 一级菜单样式 */
@@ -18,7 +22,7 @@ nav > a {
     margin-bottom: 5px;
     text-decoration: none;
     color: #333;
-    background-color: #e0e0e0;  /* 一级菜单背景颜色 */
+    background-color: #e0e0e0; /* 一级菜单背景颜色 */
     font-weight: bold;
     cursor: pointer;
     border-radius: 4px;
@@ -33,7 +37,7 @@ nav > a:hover {
 /* 二级菜单样式 */
 .submenu {
     margin-left: 20px;
-    display: none;  /* 默认隐藏二级菜单 */
+    display: none; /* 默认隐藏二级菜单 */
 }
 
 .submenu a {
@@ -42,7 +46,7 @@ nav > a:hover {
     margin-bottom: 5px;
     text-decoration: none;
     color: #333;
-    background-color: #f0f0f0;  /* 二级菜单背景颜色 */
+    background-color: #f0f0f0; /* 二级菜单背景颜色 */
     border-radius: 4px;
     cursor: pointer;
 }
@@ -57,6 +61,7 @@ nav > a:hover {
 .content {
     flex-grow: 1;
     padding: 20px;
+    margin-left: 270px; /* 给内容留出导航栏的空间 */
     background-color: #f9f9f9;
     border-left: 2px solid #ccc;
 }
