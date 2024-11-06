@@ -9,11 +9,7 @@
     <script src="https://unpkg.com/marked@4.0.12/marked.min.js"></script>
 
     <style>
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-        }
+        /* 样式用于页面布局 */
         nav {
             margin-bottom: 20px;
         }
@@ -22,6 +18,14 @@
             cursor: pointer;
             text-decoration: none;
             color: blue;
+        }
+        /* 渲染的 Markdown 内容 */
+        .content {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
         }
     </style>
 </head>
@@ -35,26 +39,26 @@
         <a href="#" onclick="loadMarkdown('Tools/file4.md')">Tools Page 2</a>
     </nav>
 
-    <iframe id="contentFrame"></iframe>
+    <!-- 渲染 Markdown 的容器 -->
+    <div id="content" class="content"></div>
 
     <script>
         // 默认加载 Agent 下的 file1.md
         loadMarkdown('Home.md');  
 
         function loadMarkdown(file) {
-            const iframe = document.getElementById('contentFrame');
+            const contentContainer = document.getElementById('content'); // 获取渲染内容的容器
 
             // 使用 unpkg 加载的 marked.js 渲染 Markdown
             fetch('https://raw.githubusercontent.com/qinyicong/BoardXDoc/main/' + file)
                 .then(response => response.text())
                 .then(data => {
                     const content = marked(data);  // 使用 marked 渲染 Markdown
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    iframeDoc.body.innerHTML = content;
+                    contentContainer.innerHTML = content; // 将渲染后的内容插入到页面
                 })
                 .catch(error => {
                     console.error('Error loading Markdown file:', error);
-                    iframe.contentDocument.body.innerHTML = '<p>Failed to load content.</p>';
+                    contentContainer.innerHTML = '<p>Failed to load content.</p>'; // 错误处理
                 });
         }
     </script>
