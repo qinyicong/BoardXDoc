@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BoardXDoc</title>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- 引入 marked.js -->
+    <script src="https://unpkg.com/marked@4.0.12/marked.min.js"></script> <!-- 引入 marked.js -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -97,16 +97,14 @@
     </div>
 
      <!-- JavaScript -->
-     <script>
-        // 默认加载
+    <script>
+        // 默认加载 Agent 下的 file1.md
         loadMarkdown('Home.md');  
 
         function loadMarkdown(file) {
             const iframe = document.getElementById('contentFrame');
 
-            // 确保 marked 已经定义，可以正常使用
-            console.log(marked);  // 检查 marked 是否已加载
-
+            // 使用 unpkg 加载的 marked.js 渲染 Markdown
             fetch('https://raw.githubusercontent.com/qinyicong/BoardXDoc/main/' + file)
                 .then(response => response.text())
                 .then(data => {
