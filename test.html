@@ -46,21 +46,21 @@
 
     <!-- 左侧导航栏 -->
     <nav>
-        <a href="#" onclick="loadMarkdown('wiki/Home.md')">Agent Page 1</a>
-        <a href="#" onclick="loadMarkdown('wiki/Agent/Copywriter.md')">Tools Page 1</a>
+        <a href="wiki/Home.md" onclick="loadMarkdown('wiki/Home.md')">Agent Page 1</a>
+        <a href="wiki/Agent/Copywriter.md" onclick="loadMarkdown('wiki/Agent/Copywriter.md')">Tools Page 1</a>
         <a href="#" onclick="loadMarkdown('Agent/file3.md')">Agent Page 2</a>
         <a href="#" onclick="loadMarkdown('Tools/file4.md')">Tools Page 2</a>
     </nav>
 
     <!-- 右侧内容区域 -->
-    <div id="content" class="wikicontent">
+    <div id="wikicontent" class="content">
         <h1>Welcome</h1>
         <p>Please select a page from the left navigation to view its content.</p>
     </div>
 
     <script>
         // 默认加载 Agent 下的 file1.md
-        loadMarkdown('Agent/file1.md');
+        loadMarkdown('wiki/Home.md');
 
         // 加载指定的 Markdown 文件并渲染
         function loadMarkdown(file) {
