@@ -113,7 +113,7 @@
             const iframe = document.getElementById('contentFrame');
 
             // 通过 fetch 获取 Markdown 文件内容
-            fetch('https://raw.githubusercontent.com/qinyicong/BoardXDoc/main/' + file)
+            fetch('https://raw.githubusercontent.com/qinyicong/BoardXDoc/main/wiki/' + file)
                 .then(response => response.text())
                 .then(data => {
                     // 使用 marked.js 渲染 Markdown 内容
