@@ -9,7 +9,6 @@
     <script src="https://unpkg.com/marked@4.0.12/marked.min.js"></script>
 
     <style>
-        /* 样式用于页面布局 */
         nav {
             margin-bottom: 20px;
         }
@@ -19,7 +18,6 @@
             text-decoration: none;
             color: blue;
         }
-        /* 渲染的 Markdown 内容 */
         .content {
             margin-top: 20px;
             padding: 20px;
@@ -32,14 +30,12 @@
 <body>
 
     <nav>
-        <!-- 导航菜单，点击后加载不同的 Markdown 文件 -->
         <a href="#" onclick="loadMarkdown('Agent/file1.md')">Agent Page 1</a>
         <a href="#" onclick="loadMarkdown('Tools/file2.md')">Tools Page 1</a>
         <a href="#" onclick="loadMarkdown('Agent/file3.md')">Agent Page 2</a>
         <a href="#" onclick="loadMarkdown('Tools/file4.md')">Tools Page 2</a>
     </nav>
 
-    <!-- 渲染 Markdown 的容器 -->
     <div id="content" class="content"></div>
 
     <script>
@@ -48,6 +44,15 @@
 
         function loadMarkdown(file) {
             const contentContainer = document.getElementById('content'); // 获取渲染内容的容器
+
+            // 检查 marked 是否加载成功
+            console.log("Marked Function: ", marked);  // 在控制台输出 marked 对象
+
+            if (typeof marked !== 'function') {
+                console.error('Error: marked is not a function');
+                contentContainer.innerHTML = '<p>Failed to load content due to marked.js issue.</p>';
+                return;
+            }
 
             // 使用 unpkg 加载的 marked.js 渲染 Markdown
             fetch('https://raw.githubusercontent.com/qinyicong/BoardXDoc/main/' + file)
