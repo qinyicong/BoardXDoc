@@ -92,27 +92,25 @@
 
         <!-- Content Pane -->
         <div class="content">
-            <iframe name="content-frame" src="wiki/Home.md" id="contentFrame"></iframe>
+            <iframe id="contentFrame" name="content-frame" src="wiki/Home.md" ></iframe>
         </div>
     </div>
 
      <!-- JavaScript -->
-    <script>
-        // Function to Markdown
-        // Default load
-        loadMarkdown('Home.md');
+     <script>
+        // 默认加载
+        loadMarkdown('Home.md');  
 
         function loadMarkdown(file) {
-            // 获取 iframe 元素
             const iframe = document.getElementById('contentFrame');
 
-            // 通过 fetch 获取 Markdown 文件内容
+            // 确保 marked 已经定义，可以正常使用
+            console.log(marked);  // 检查 marked 是否已加载
+
             fetch('https://raw.githubusercontent.com/qinyicong/BoardXDoc/main/' + file)
                 .then(response => response.text())
                 .then(data => {
-                    // 使用 marked.js 渲染 Markdown 内容
-                    const content = marked(data);
-                    // 获取 iframe 的 document 并设置内容
+                    const content = marked(data);  // 使用 marked 渲染 Markdown
                     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                     iframeDoc.body.innerHTML = content;
                 })
@@ -132,5 +130,6 @@
         }
 
     </script>
+    
 </body>
 </html>
