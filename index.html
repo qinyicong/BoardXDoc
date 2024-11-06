@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BoardXDoc</title>
-    <script src="https://unpkg.com/marked@4.0.12/marked.min.js"></script> <!-- 引入 marked.js -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -92,29 +91,45 @@
 
         <!-- Content Pane -->
         <div class="content">
-            <iframe id="contentFrame" name="content-frame" src="wiki/Home.md" ></iframe>
+            <iframe id="content" name="content-frame" src="wiki/Home.md" ></iframe>
         </div>
     </div>
 
      <!-- JavaScript -->
-    <script>
-        // 默认加载 Agent 下的 file1.md
-        loadMarkdown('Home.md');  
+<script>
+        // 默认加载
+        loadMarkdown('wiki/Home.md');  
 
         function loadMarkdown(file) {
-            const iframe = document.getElementById('contentFrame');
+            const contentContainer = document.getElementById('content'); // 获取渲染内容的容器
 
-            // 使用 unpkg 加载的 marked.js 渲染 Markdown
-            fetch('https://raw.githubusercontent.com/qinyicong/BoardXDoc/main/' + file)
-                .then(response => response.text())
+            // 先获取原始的 Markdown 文件内容
+            fetch(`https://api.github.com/repos/qinyicong/BoardXDoc/contents/${file}`)
+                .then(response => response.json())
                 .then(data => {
-                    const content = marked(data);  // 使用 marked 渲染 Markdown
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    iframeDoc.body.innerHTML = content;
+                    // 获取文件的内容，GitHub 返回的内容是 Base64 编码的，需要解码
+                    const markdownContent = atob(data.content);  // 解码 Base64
+
+                    // 调用 GitHub 的 Markdown 渲染端点
+                    fetch('https://api.github.com/markdown', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ text: markdownContent, mode: 'gfm' }) // GitHub Flavored Markdown (GFM)
+                    })
+                    .then(response => response.text())
+                    .then(renderedHtml => {
+                        contentContainer.innerHTML = renderedHtml;  // 渲染 HTML 内容到页面
+                    })
+                    .catch(error => {
+                        console.error('Error rendering Markdown:', error);
+                        contentContainer.innerHTML = '<p>Failed to render Markdown content.</p>';
+                    });
                 })
                 .catch(error => {
                     console.error('Error loading Markdown file:', error);
-                    iframe.contentDocument.body.innerHTML = '<p>Failed to load content.</p>';
+                    contentContainer.innerHTML = '<p>Failed to load Markdown file.</p>';
                 });
         }
     </script>
