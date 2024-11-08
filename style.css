@@ -8,9 +8,9 @@ body {
 
 nav {
     width: 250px;
-    padding: 20px;
+    padding: 5px;
     background-color: #f4f4f4;
-    border-right: 2px solid #ccc;
+    border-right: 1px solid #ccc;
     position: fixed; /* 固定导航栏位置 */
     height: 100vh; /* 让导航栏高度占满视窗 */
     overflow-y: auto; /* 如果内容太多，允许滚动 */
@@ -37,7 +37,7 @@ nav > a:hover {
 
 /* 二级菜单样式 */
 .submenu {
-    margin-left: 20px;
+    margin-left: 10px;
     /*display: none;  默认隐藏二级菜单 */
     display: block; /* 默认展开二级菜单 */
 }
@@ -62,11 +62,10 @@ nav > a:hover {
 /* 右侧内容区域 */
 .content {
     flex-grow: 1;
-    padding: 20px;
+    padding: 5px;
     margin-left: 300px; /* 导航栏宽度 + 50px 的间距 */
-    margin-right: 100px;
     background-color: #f9f9f9;
-    border-left: 2px solid #ccc;
+    border-left: 1px solid #ccc;
 }
 
 /* active 类：点击隐藏二级菜单 */
