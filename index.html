@@ -11,14 +11,14 @@
 
 <!-- 左侧导航栏 -->
     <nav>
-        <a href="#" onclick="toggleSubmenu(event);loadMarkdown('wiki/Home.md')">For Beginner</a>
+        <a href="#" onclick="loadMarkdown('wiki/Home.md')">For Beginner</a>
         <div class="submenu">
             <a href="#" onclick="loadMarkdown('wiki/Masterin2Minutes.md')">Master in 2 Minutes</a>
             <a href="#" onclick="loadMarkdown('SiteMap.md')">Site Map</a>
             <a href="#" onclick="loadMarkdown('xxx.md')">...</a>
         </div>
 
-        <a href="#" onclick="toggleSubmenu(event);loadMarkdown('xxx.md')">Guide of Agent</a>
+        <a href="#" onclick="loadMarkdown('xxx.md')">Guide of Agent</a>
         <div class="submenu">
             <a href="#" onclick="loadMarkdown('wiki/Agent/Copywriter.md')">Copywriter</a>
             <a href="#" onclick="loadMarkdown('wiki/Agent/MathTutor.md')">MathTutor</a>
@@ -30,7 +30,7 @@
             <a href="#" onclick="loadMarkdown('wiki/Agent/Copywriter.md')">......</a>
         </div>
 
-        <a href="#" onclick="toggleSubmenu(event);loadMarkdown('xxx.md')">Guide of Tools</a>
+        <a href="#" onclick="loadMarkdown('xxx.md')">Guide of Tools</a>
         <div class="submenu">
             <a href="#" onclick="loadMarkdown('wiki/Tools/EmpathyMap.md')">Empathy Map</a>
             <a href="#" onclick="loadMarkdown('wiki/Tools/BrainstormIdeas.md')">Brainstorm Ideas</a>
@@ -51,7 +51,7 @@
             
         </div>
 
-        <a href="#" onclick="toggleSubmenu(event);loadMarkdown('xxx.md')">Guide of Image Tools</a>
+        <a href="#" onclick="loadMarkdown('xxx.md')">Guide of Image Tools</a>
         <div class="submenu">
             <a href="#" onclick="loadMarkdown('wiki/ImageTools/Impressionist.md')">Impressionist</a>
             <a href="#" onclick="loadMarkdown('wiki/ImageTools/VincentvanGogh.md')">Vincent van Gogh</a>
@@ -64,7 +64,7 @@
             
         </div>
 
-        <a href="#" onclick="toggleSubmenu(event);loadMarkdown('xxx.md')">Knowleage of Prompt Enginnering</a>
+        <a href="#" onclick="loadMarkdown('xxx.md')">Knowleage of Prompt Enginnering</a>
         <div class="submenu">
             <a href="#" onclick="loadMarkdown('wiki/PE/xxxx.md')">Topic1</a>
             <a href="#" onclick="loadMarkdown('wiki/PE/xxxx.md')">Topic2</a>
@@ -121,28 +121,31 @@
     }
 
 
-   // Function to toggle the visibility of submenus
-    function toggleSubmenu(event) {
-        event.preventDefault();
-        const parentLink = event.target;
-        const parent = parentLink.parentNode;
+// Toggle active class to show/hide submenus
+const menuLinks = document.querySelectorAll('nav > a');
+menuLinks.forEach(link => {
+    link.addEventListener('click', function (event) {
+        const parent = link.parentNode;
         const submenu = parent.querySelector('.submenu');
-        
-        // Only toggle the clicked submenu, not others
-        if (submenu) {
-            submenu.classList.toggle('active');
-        }
-    }
 
-    // Function to load content into the main area based on submenu click
-    function loadContent(contentId) {
-        const contentTitle = document.getElementById('contentTitle');
-        const contentBody = document.getElementById('contentBody');
-        
-        // Simple content switching, could be replaced with actual Markdown loading
-        contentTitle.innerText = contentId;
-        contentBody.innerHTML = `<p>This is the content for ${contentId}. You can replace this with actual Markdown content.</p>`;
-    }
+        // 关闭其他已展开的子菜单
+        menuLinks.forEach(otherLink => {
+            const otherParent = otherLink.parentNode;
+            const otherSubmenu = otherParent.querySelector('.submenu');
+            if (otherSubmenu && otherSubmenu !== submenu) {
+                otherParent.classList.remove('active');
+            }
+        });
+
+        // 切换当前子菜单的可见性
+        if (submenu) {
+            parent.classList.toggle('active');
+        }
+
+        // 阻止默认行为（页面滚动）
+        event.preventDefault();
+    });
+});
     </script>
 
 </body>
