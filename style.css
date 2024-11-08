@@ -2,7 +2,7 @@
 body {
     display: flex;
     font-family: Arial, sans-serif;
-    font-size: small;
+    font-size: 12px;
     margin: 0;
 }
 
@@ -19,8 +19,8 @@ nav {
 /* 一级菜单样式 */
 nav > a {
     display: block;
-    padding: 10px;
-    margin-bottom: 5px;
+    padding: 5px;
+    margin-bottom: 2px;
     text-decoration: none;
     color: #333;
     background-color: #e0e0e0; /* 一级菜单背景颜色 */
@@ -44,8 +44,8 @@ nav > a:hover {
 
 .submenu a {
     display: block;
-    padding: 8px;
-    margin-bottom: 5px;
+    padding: 5px;
+    margin-bottom: 2px;
     text-decoration: none;
     color: #333;
     background-color: #f0f0f0; /* 二级菜单背景颜色 */
@@ -64,6 +64,7 @@ nav > a:hover {
     flex-grow: 1;
     padding: 20px;
     margin-left: 300px; /* 导航栏宽度 + 50px 的间距 */
+    margin-right: 100px;
     background-color: #f9f9f9;
     border-left: 2px solid #ccc;
 }
