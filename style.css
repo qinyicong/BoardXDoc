@@ -63,7 +63,7 @@ nav > a:hover {
 .content {
     flex-grow: 1;
     padding: 5px;
-    margin-left: 250px; /* 导航栏宽度 + 50px 的间距 */
+    margin-left: 260px; /* 导航栏宽度 + 50px 的间距 */
     background-color: #f9f9f9;
     border-left: 1px solid #ccc;
 }
