@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoardXDoc</title>
+    <link rel="stylesheet" href="style.css">
+    <base href="https://qinyicong.github.io/BoardXDoc/">
+</head>
+<body>
+
+<!-- 左侧导航栏 -->
+<nav>
+    <a href="?file=wiki/Home.md">For Beginner</a>
+    <div class="submenu">
+        <a href="?file=wiki/Masterin2Minutes.md">Master in 2 Minutes</a>
+        <a href="?file=SiteMap.md">Site Map</a>
+        <a href="?file=xxx.md">...</a>
+    </div>
+
+    <a href="?file=xxx.md">Guide of Agent</a>
+    <div class="submenu">
+        <a href="?file=wiki/Agent/Copywriter.md">Copywriter</a>
+        <a href="?file=wiki/Agent/MathTutor.md">MathTutor</a>
+        <a href="?file=wiki/Agent/SoftwareArchitect.md">Software Architect</a>
+        <a href="?file=wiki/Agent/QuickLearnAnything.md">Quick Learn Anything</a>
+        <a href="?file=wiki/Agent/BookExpert.md">Book Expert</a>
+        <a href="?file=wiki/Agent/ChineseAsistant.md">Chinese Assistant</a>
+        <a href="?file=wiki/Agent/GhostPostCreator.md">Ghost Post Creator</a>
+        <a href="?file=wiki/Agent/Copywriter.md">......</a>
+    </div>
+
+    <!-- 其他菜单结构保持不变 -->
+
+</nav>
+
+<!-- 右侧内容区域 -->
+<div id="content" class="content">
+    <h1>Welcome</h1>
+    <p>Please select a page from the left navigation to view its content.</p>
+</div>
+
+<script>
+    // 获取 URL 查询参数以加载特定 Markdown 文件
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // 页面加载时获取查询参数中的文件路径
+    document.addEventListener('DOMContentLoaded', () => {
+        const file = getQueryParam('file') || 'wiki/Home.md';
+        loadMarkdown(file);
+    });
+
+    function loadMarkdown(file) {
+        const contentContainer = document.getElementById('content');
+
+        fetch(`https://api.github.com/repos/qinyicong/BoardXDoc/contents/${file}`)
+            .then(response => response.json())
+            .then(data => {
+                const markdownContent = atob(data.content);
+
+                fetch('https://api.github.com/markdown', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: markdownContent, mode: 'gfm' })
+                })
+                .then(response => response.text())
+                .then(renderedHtml => {
+                    renderedHtml = renderedHtml.replace(
+                        /https:\/\/camo\.githubusercontent\.com\/[a-f0-9]+\/[0-9a-f]{6,}\/https:\/\/([^"]+)/g,
+                        'https://$1'
+                    );
+                    contentContainer.innerHTML = renderedHtml;
+                })
+                .catch(error => {
+                    console.error('Error rendering Markdown:', error);
+                    contentContainer.innerHTML = '<p>Failed to render Markdown content.</p>';
+                });
+            })
+            .catch(error => {
+                console.error('Error loading Markdown file:', error);
+                contentContainer.innerHTML = '<p>Failed to load Markdown file.</p>';
+            });
+    }
+
+    // Toggle active class to show/hide submenus
+    const menuLinks = document.querySelectorAll('nav > a');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+            const parent = link.parentNode;
+            const submenu = parent.querySelector('.submenu');
+
+            // 关闭其他已展开的子菜单
+            menuLinks.forEach(otherLink => {
+                const otherParent = otherLink.parentNode;
+                const otherSubmenu = otherParent.querySelector('.submenu');
+                if (otherSubmenu && otherSubmenu !== submenu) {
+                    otherParent.classList.remove('active');
+                }
+            });
+
+            // 切换当前子菜单的可见性
+            if (submenu) {
+                parent.classList.toggle('active');
+            }
+
+            // 阻止默认行为（页面滚动）
+            event.preventDefault();
+        });
+    });
+</script>
+
+</body>
+</html>
