@@ -80,42 +80,48 @@
     </div>
 
     <script>
-        // 默认加载 Agent 下的 file1.md
-        loadMarkdown('wiki/Home.md');
+// 页面加载时从 sessionStorage 加载文件路径
+    document.addEventListener('DOMContentLoaded', () => {
+        const lastFile = sessionStorage.getItem('currentFile') || 'wiki/Home.md';
+        loadMarkdown(lastFile);
+    });
 
-        // 加载指定的 Markdown 文件并渲染
-        function loadMarkdown(file) {
-            const contentContainer = document.getElementById('content'); // 获取渲染内容的容器
+    // 加载指定的 Markdown 文件并渲染
+    function loadMarkdown(file) {
+        // 将文件路径存储在 sessionStorage 中
+        sessionStorage.setItem('currentFile', file);
 
-            // 获取原始的 Markdown 文件内容
-            fetch(`https://api.github.com/repos/qinyicong/BoardXDoc/contents/${file}`)
-                .then(response => response.json())
-                .then(data => {
-                    // 获取文件的内容，GitHub 返回的内容是 Base64 编码的，需要解码
-                    const markdownContent = atob(data.content);  // 解码 Base64
+        const contentContainer = document.getElementById('content'); // 获取渲染内容的容器
 
-                    // 调用 GitHub 的 Markdown 渲染端点
-                    fetch('https://api.github.com/markdown', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ text: markdownContent, mode: 'gfm' }) // GitHub Flavored Markdown (GFM)
-                    })
-                    .then(response => response.text())
-                    .then(renderedHtml => {
-                        contentContainer.innerHTML = renderedHtml;  // 渲染 HTML 内容到页面
-                    })
-                    .catch(error => {
-                        console.error('Error rendering Markdown:', error);
-                        contentContainer.innerHTML = '<p>Failed to render Markdown content.</p>';
-                    });
+        // 获取原始的 Markdown 文件内容
+        fetch(`https://api.github.com/repos/qinyicong/BoardXDoc/contents/${file}`)
+            .then(response => response.json())
+            .then(data => {
+                // 获取文件的内容，GitHub 返回的内容是 Base64 编码的，需要解码
+                const markdownContent = atob(data.content);  // 解码 Base64
+
+                // 调用 GitHub 的 Markdown 渲染端点
+                fetch('https://api.github.com/markdown', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: markdownContent, mode: 'gfm' }) // GitHub Flavored Markdown (GFM)
+                })
+                .then(response => response.text())
+                .then(renderedHtml => {
+                    contentContainer.innerHTML = renderedHtml;  // 渲染 HTML 内容到页面
                 })
                 .catch(error => {
-                    console.error('Error loading Markdown file:', error);
-                    contentContainer.innerHTML = '<p>Failed to load Markdown file.</p>';
+                    console.error('Error rendering Markdown:', error);
+                    contentContainer.innerHTML = '<p>Failed to render Markdown content.</p>';
                 });
-        }
+            })
+            .catch(error => {
+                console.error('Error loading Markdown file:', error);
+                contentContainer.innerHTML = '<p>Failed to load Markdown file.</p>';
+            });
+    }
 
         // Toggle active class to show/hide submenus
         const menuLinks = document.querySelectorAll('nav > a');
