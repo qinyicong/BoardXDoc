@@ -124,6 +124,7 @@
 // Toggle active class to show/hide submenus
     // 获取所有一级菜单项
     const menuLinks = document.querySelectorAll('nav > a');
+    
     // 为每个一级菜单项添加点击事件
     menuLinks.forEach(link => {
         link.addEventListener('click', function(event) {
@@ -132,11 +133,10 @@
 
             // 如果当前菜单项有二级菜单
             if (submenu) {
-                // 关闭其它的子菜单
+                // 关闭所有其他二级菜单
                 document.querySelectorAll('nav > div.submenu').forEach(sub => {
-                    // 只关闭当前菜单的外部二级菜单
                     if (sub !== submenu) {
-                        sub.style.display = 'none'; // 隐藏其它的二级菜单
+                        sub.style.display = 'none';  // 隐藏其它的二级菜单
                     }
                 });
 
@@ -147,6 +147,7 @@
                     submenu.style.display = 'block';  // 当前未打开，打开
                 }
             }
+
             // 防止点击后页面跳转
             event.preventDefault();
         });
