@@ -84,44 +84,46 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const lastFile = sessionStorage.getItem('currentFile') || 'wiki/Home.md';
-        loadMarkdown(lastFile);
-    });
+// 检测 URL 参数
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const file = urlParams.get('file') || 'wiki/Home.md';
+    loadMarkdown(file);
+});
 
-    function loadMarkdown(file) {
-        sessionStorage.setItem('currentFile', file);
-        const contentContainer = document.getElementById('content');
+// 动态加载 Markdown 文件
+function loadMarkdown(file) {
+    sessionStorage.setItem('currentFile', file);
+    const contentContainer = document.getElementById('content');
 
-        fetch(`https://api.github.com/repos/qinyicong/BoardXDoc/contents/${file}`)
-            .then(response => response.json())
-            .then(data => {
-                const markdownContent = atob(data.content);
+    fetch(`https://api.github.com/repos/qinyicong/BoardXDoc/contents/${file}`)
+        .then(response => response.json())
+        .then(data => {
+            const markdownContent = atob(data.content);
 
-                fetch('https://api.github.com/markdown', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: markdownContent, mode: 'gfm' })
-                })
-                .then(response => response.text())
-                .then(renderedHtml => {
-                    // 解析并替换 Camo URL
-                    renderedHtml = renderedHtml.replace(
-                        /https:\/\/camo\.githubusercontent\.com\/[a-f0-9]+\/[0-9a-f]{6,}\/https:\/\/([^"]+)/g,
-                        'https://$1'
-                    );
-                    contentContainer.innerHTML = renderedHtml;
-                })
-                .catch(error => {
-                    console.error('Error rendering Markdown:', error);
-                    contentContainer.innerHTML = '<p>Failed to render Markdown content.</p>';
-                });
+            fetch('https://api.github.com/markdown', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: markdownContent, mode: 'gfm' })
+            })
+            .then(response => response.text())
+            .then(renderedHtml => {
+                renderedHtml = renderedHtml.replace(
+                    /https:\/\/camo\.githubusercontent\.com\/[a-f0-9]+\/[0-9a-f]{6,}\/https:\/\/([^"]+)/g,
+                    'https://$1'
+                );
+                contentContainer.innerHTML = renderedHtml;
             })
             .catch(error => {
-                console.error('Error loading Markdown file:', error);
-                contentContainer.innerHTML = '<p>Failed to load Markdown file.</p>';
+                console.error('Error rendering Markdown:', error);
+                contentContainer.innerHTML = '<p>Failed to render Markdown content.</p>';
             });
-    }
+        })
+        .catch(error => {
+            console.error('Error loading Markdown file:', error);
+            contentContainer.innerHTML = '<p>Failed to load Markdown file.</p>';
+        });
+}
 
 
 // Toggle active class to show/hide submenus
