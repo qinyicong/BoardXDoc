@@ -67,6 +67,9 @@ nav > a:hover {
 }
 
 /* active 类：展开显示二级菜单 */
-.active .submenu {
-    display: block;
+.active > .submenu {
+            display: block; /* Show submenu if parent has 'active' class */
 }
+/*.active .submenu {
+    display: block;
+}*/
