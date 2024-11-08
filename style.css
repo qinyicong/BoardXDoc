@@ -37,7 +37,8 @@ nav > a:hover {
 /* 二级菜单样式 */
 .submenu {
     margin-left: 20px;
-    display: none; /* 默认隐藏二级菜单 */
+    /*display: none;  默认隐藏二级菜单 */
+    display: block; /* 默认展开二级菜单 */
 }
 
 .submenu a {
