@@ -2,6 +2,7 @@
 body {
     display: flex;
     font-family: Arial, sans-serif;
+    font-size: small;
     margin: 0;
 }
 
@@ -67,7 +68,7 @@ nav > a:hover {
     border-left: 2px solid #ccc;
 }
 
-/* active 类：展开显示二级菜单 */
+/* active 类：点击隐藏二级菜单 */
 .active .submenu {
-    display: block;
+    display: none;
 }
