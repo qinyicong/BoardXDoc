@@ -19,7 +19,7 @@ A persona map is a visual representation of your ideal customer, designed to hel
 
 So, why should you consider using BoardX Tools to generate your persona maps? Let's break it down.
 
-![1731056683589](images/GeneratePersonaMap/1731056683589.png)
+![1731056683589](https://qinyicong.github.io/BoardXDoc/wiki/Tools/images/GeneratePersonaMap/1731056683589.png)
 
 ### 1. Automatic Generation
 
@@ -45,13 +45,13 @@ Ready to get started? Follow these simple steps to generate your persona maps ef
 
 Visit the [BoardX Tools website](https://boardx.us) and create an account. It's quick and easy!
 
-![1731057042749](images/GeneratePersonaMap/1731057042749.png)
+![1731057042749](https://qinyicong.github.io/BoardXDoc/wiki/Tools/images/GeneratePersonaMap/1731057042749.png)
 
 ### Step 2: Create a team & Create a board
 
 Once signed in, you're asked to create a room, click the room name in left navigation, then Click the [Create Board], a board will be created.
 
-![1731057404816](images/GeneratePersonaMap/1731057404816.png)
+![1731057404816](https://qinyicong.github.io/BoardXDoc/wiki/Tools/images/GeneratePersonaMap/1731057404816.png)
 
 ### Step 3: Generate Your Persona Map
 
@@ -63,15 +63,15 @@ Open the board you have created.
 
 A persona map will be create in a template. It takes mere minutes!
 
-![1731057789269](images/GeneratePersonaMap/1731057789269.png)
+![1731057789269](https://qinyicong.github.io/BoardXDoc/wiki/Tools/images/GeneratePersonaMap/1731057789269.png)
 
-![1731058330624](images/GeneratePersonaMap/1731058330624.png)
+![1731058330624](https://qinyicong.github.io/BoardXDoc/wiki/Tools/images/GeneratePersonaMap/1731058330624.png)
 
 ### Step 4: Customize and Refine
 
 Review the generated map and customize it further. Add in unique traits and specific needs of your audience.
 
-![1731058354215](images/GeneratePersonaMap/1731058354215.png)
+![1731058354215](https://qinyicong.github.io/BoardXDoc/wiki/Tools/images/GeneratePersonaMap/1731058354215.png)
 
 ### Step 5: Collaborate and Share
 
